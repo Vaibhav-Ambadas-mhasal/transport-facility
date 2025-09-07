@@ -1,0 +1,14 @@
+<div class="dialog-backdrop" *ngIf="visible">
+  <div class="dialog-box">
+    <header class="dialog-header">
+      <h2>{{ title }}</h2>
+      <button class="close-btn" (click)="close()">×</button>
+    </header>
+    <section class="dialog-body">
+      <p>{{ message }}</p>
+    </section>
+    <footer class="dialog-footer">
+      <button class="ok-btn" (click)="close()">OK</button>
+    </footer>
+  </div>
+</div>

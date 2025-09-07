@@ -1,0 +1,79 @@
+<div class="add-ride-container">
+  <h2>Add a Ride</h2>
+  <form [formGroup]="rideForm" (ngSubmit)="submitRide()">
+    <!-- Employee ID -->
+    <input type="text" placeholder="Employee ID" formControlName="employeeId" />
+    <div
+      *ngIf="rideForm.get('employeeId')?.touched && rideForm.get('employeeId')?.invalid"
+      class="error"
+    >
+      Employee ID is required (min 3 characters)
+    </div>
+
+    <!-- Vehicle Type -->
+    <select class="select-container" formControlName="vehicleType">
+      <option value="" disabled>Select Vehicle</option>
+      <option value="Bike">Bike</option>
+      <option value="Car">Car</option>
+    </select>
+    <div
+      *ngIf="rideForm.get('vehicleType')?.touched && rideForm.get('vehicleType')?.invalid"
+      class="error"
+    >
+      Vehicle Type is required
+    </div>
+
+    <!-- Vehicle No -->
+    <input type="text" placeholder="Vehicle No" formControlName="vehicleNo" />
+    <div
+      *ngIf="rideForm.get('vehicleNo')?.touched && rideForm.get('vehicleNo')?.invalid"
+      class="error"
+    >
+      Vehicle No is required
+    </div>
+
+    <!-- Vacant Seats -->
+    <input type="number" placeholder="Vacant Seats" formControlName="vacantSeats" />
+    <div
+      *ngIf="rideForm.get('vacantSeats')?.touched && rideForm.get('vacantSeats')?.invalid"
+      class="error"
+    >
+      Vacant Seats must be at least 1
+    </div>
+
+    <!-- Time -->
+    <input type="time" formControlName="time" />
+    <div *ngIf="rideForm.get('time')?.touched && rideForm.get('time')?.invalid" class="error">
+      Time is required
+    </div>
+
+    <!-- Pick-up Point -->
+    <input type="text" placeholder="Pick-up Point" formControlName="pickupPoint" />
+    <div
+      *ngIf="rideForm.get('pickupPoint')?.touched && rideForm.get('pickupPoint')?.invalid"
+      class="error"
+    >
+      Pick-up Point is required
+    </div>
+
+    <!-- Destination -->
+    <input type="text" placeholder="Destination" formControlName="destination" />
+    <div
+      *ngIf="rideForm.get('destination')?.touched && rideForm.get('destination')?.invalid"
+      class="error"
+    >
+      Destination is required
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="button-container" [disabled]="rideForm.invalid">Add Ride</button>
+  </form>
+
+  <!-- Reusable dialog -->
+  <app-dialog
+    [title]="dialogTitle"
+    [message]="dialogMessage"
+    [visible]="dialogVisible"
+    (closed)="dialogVisible = false"
+  ></app-dialog>
+</div>

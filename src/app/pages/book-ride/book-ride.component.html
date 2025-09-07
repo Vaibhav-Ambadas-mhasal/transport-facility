@@ -1,0 +1,63 @@
+<div class="book-ride-container">
+  <h2>Available Rides</h2>
+
+  <div class="filter-container">
+    <!-- Employee ID Input -->
+    <div class="employee-id">
+      <input
+        type="text"
+        class="employee-id-input"
+        placeholder="Enter Employee ID"
+        [(ngModel)]="employeeId"
+      />
+      <button class="employee-id-button" (click)="loadRides()">Load Available Rides</button>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters" *ngIf="rides.length > 0">
+      <select [(ngModel)]="filterVehicle" (change)="applyFilters()">
+        <option value="">All Vehicles</option>
+        <option value="Bike">Bike</option>
+        <option value="Car">Car</option>
+      </select>
+
+      <input
+        type="time"
+        [(ngModel)]="filterTime"
+        (change)="applyFilters()"
+        placeholder="Leave empty to show all rides"
+      />
+    </div>
+  </div>
+
+  <!-- Ride list -->
+  <div class="ride-list" *ngIf="filteredRides.length > 0">
+    <div class="ride-card" *ngFor="let ride of filteredRides">
+      <p><strong>Vehicle:</strong> {{ ride.vehicleType }} ({{ ride.vehicleNo }})</p>
+      <p><strong>Vacant Seats:</strong> {{ ride.vacantSeats }}</p>
+      <p><strong>Time:</strong> {{ ride.time }}</p>
+      <p><strong>Pick-up:</strong> {{ ride.pickupPoint }}</p>
+      <p><strong>Destination:</strong> {{ ride.destination }}</p>
+
+      <button
+        (click)="bookRide(ride)"
+        [disabled]="ride.vacantSeats === 0 || ride.bookedEmployees.includes(employeeId)"
+      >
+        Book Ride
+      </button>
+    </div>
+  </div>
+
+  <!-- No rides available message -->
+  <div *ngIf="ridesLoaded && filteredRides.length === 0">
+    <p class="no-record">No rides available to book at the moment.</p>
+  </div>
+
+  <!-- Reusable dialog -->
+  <app-dialog
+    [title]="dialogTitle"
+    [message]="dialogMessage"
+    [visible]="dialogVisible"
+    (closed)="dialogVisible = false"
+  ></app-dialog>
+</div>
